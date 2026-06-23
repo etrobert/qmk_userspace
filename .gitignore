@@ -1,0 +1,5 @@
+# direnv / nix-direnv
+/.direnv/
+
+# nix build output symlink
+/result
