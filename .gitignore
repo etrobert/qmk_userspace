@@ -3,3 +3,9 @@
 
 # nix build output symlink
 /result
+
+# QMK build artifacts
+.build/
+*.bin
+*.hex
+*.uf2
