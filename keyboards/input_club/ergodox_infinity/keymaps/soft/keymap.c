@@ -1,16 +1,20 @@
 #include QMK_KEYBOARD_H
 
-// Étienne's Infinity ErgoDox trial keymap — PLAN step 1 (conservative).
+// Étienne's Infinity ErgoDox trial keymap — PLAN step 2 (home-row mods).
 //
-// Goals for this first iteration:
+// Goals for this iteration:
 //   - Plain QWERTY alphas in standard positions (isolate the form-factor
 //     variable; keep daily Mac-keyboard switching survivable).
-//   - Real modifiers live on the THUMB CLUSTERS (the ErgoDox's selling point):
-//     GUI / Alt / Ctrl on the small thumb keys, plus Shift on a big thumb key.
-//     Pinky LShift/RShift are kept as a day-1 fallback.
+//   - HOME-ROW MODS (this step): tap the home-row keys for letters, hold them
+//     for modifiers. GACS order from pinky to index, mirrored per hand and
+//     matching the thumb-cluster ordering:
+//       A/;  -> GUI    S/L -> Alt    D/K -> Ctrl    F/J -> Shift
+//     Tuning lives in config.h (TAPPING_TERM, PERMISSIVE_HOLD, QUICK_TAP_TERM).
+//   - The THUMB CLUSTER mods from step 1 stay put as a fallback during the
+//     adaptation curve (GUI / Alt / Ctrl small thumb keys, Shift big thumb).
+//     Pinky LShift/RShift are likewise kept as a day-1 fallback.
 //   - One symbol/nav layer (NAV), held via the LEFT big thumb key:
 //     LT(NAV, KC_SPC) — tap for Space, hold for the layer.
-//   - NO home-row mods yet — that's PLAN step 2.
 //
 // The "Corne core" (PLAN's deferred 42-key phase) is the inner 3x6 + 3 thumbs;
 // the outer columns, the lower under-row, and the extra thumb keys are the
@@ -28,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Tab    |   Q  |   W  |   E  |   R  |   T  |  [   |           |  ]   |   Y  |   U  |   I  |   O  |   P  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | BkSp   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |   '    |
+ * | BkSp   | A/Gui| S/Alt| D/Ctl| F/Sft|   G  |------|           |------|   H  | J/Sft| K/Ctl| L/Alt| ;/Gui|   '    |
  * |--------+------+------+------+------+------| Del  |           | Ent  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -46,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // left hand
         KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_ESC,
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_LBRC,
-        KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,
+        KC_BSPC, LGUI_T(KC_A), LALT_T(KC_S), LCTL_T(KC_D), LSFT_T(KC_F), KC_G,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_DEL,
         KC_GRV,  KC_QUOT, KC_BSLS, KC_LEFT, KC_RGHT,
                                             KC_LGUI, KC_LALT,
@@ -55,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         // right hand
         KC_DEL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
         KC_RBRC, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
-                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+                 KC_H, RSFT_T(KC_J), RCTL_T(KC_K), RALT_T(KC_L), RGUI_T(KC_SCLN), KC_QUOT,
         KC_ENT,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
                           KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_RBRC,
         KC_RALT, KC_RGUI,
